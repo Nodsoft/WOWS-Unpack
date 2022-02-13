@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Nodsoft.WowsUnpack.Api.Infrastructure.Middlewares;
 
 namespace Nodsoft.WowsUnpack.Api;
@@ -17,17 +18,35 @@ public class Startup
 	{
 		services.AddControllers();
 		
+		services.AddApiVersioning(config =>
+		{
+			config.DefaultApiVersion = new(3, 0, "beta");
+			config.AssumeDefaultVersionWhenUnspecified = true;
+			config.ReportApiVersions = true;
+		});
+
+		services.AddVersionedApiExplorer(options =>
+		{
+			options.GroupNameFormat = "'v'VVV";
+			options.SubstituteApiVersionInUrl = true;
+		});
+		
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 	}
 
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
 	{
-		// Configure the HTTP request pipeline.
-		//app.UseResponseCompression();
+		app.UseSwagger(options => { options.RouteTemplate = "swagger/{documentName}/swagger.json"; });
+		app.UseSwaggerUI(options =>
+		{
+			options.RoutePrefix = "swagger";
 
-		app.UseSwagger();
-		app.UseSwaggerUI();
+			foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+			{
+				options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToLowerInvariant());
+			}
+		});
 
 		if (env.IsDevelopment())
 		{
