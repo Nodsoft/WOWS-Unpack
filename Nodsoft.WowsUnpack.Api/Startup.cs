@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
+using Nodsoft.WowsUnpack.Api.Infrastructure.Middlewares;
 
 namespace Nodsoft.WowsUnpack.Api;
 
@@ -54,5 +55,12 @@ public class Startup
 		}
 
 		app.UseForwardedHeaders(forwardedHeadersOptions);
+		
+		app.UseMiddleware<RequestLoggingMiddleware>();
+		
+		app.UseEndpoints(endpoints =>
+		{
+			endpoints.MapDefaultControllerRoute();
+		});
 	}
 }
