@@ -1,7 +1,11 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Nodsoft.WowsUnpack.Api.Infrastructure.Middlewares;
+using Nodsoft.WowsUnpack.Api.Infrastructure.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Nodsoft.WowsUnpack.Api;
 
@@ -31,10 +35,51 @@ public class Startup
 			options.SubstituteApiVersionInUrl = true;
 		});
 		
+		services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+		services.AddSwaggerGen(options =>
+		{
+			options.OperationFilter<SwaggerDefaultValues>();
+
+			// Set the comments path for the Swagger JSON and UI.
+			string xmlFile = $"{typeof(Startup).Assembly.GetName().Name}.xml";
+			string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+			options.IncludeXmlComments(xmlPath);
+
+			// Bearer token authentication
+			options.AddSecurityDefinition("jwt_auth", new()
+			{
+				Name = "bearer",
+				BearerFormat = "JWT",
+				Scheme = "bearer",
+				Description = "Specify the authorization token.",
+				In = ParameterLocation.Header,
+				Type = SecuritySchemeType.Http,
+			});
+
+			/*
+			// Make sure swagger UI requires a Bearer token specified
+			OpenApiSecurityScheme securityScheme = new()
+			{
+				Reference = new()
+				{
+					Id = "jwt_auth",
+					Type = ReferenceType.SecurityScheme
+				}
+			};
+
+			options.AddSecurityRequirement(new()
+			{
+				{ securityScheme, Array.Empty<string>() },
+			});
+			*/
+		});
+		
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 	}
 
+	
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
 	{
 		app.UseSwagger(options => { options.RouteTemplate = "swagger/{documentName}/swagger.json"; });
@@ -42,7 +87,7 @@ public class Startup
 		{
 			options.RoutePrefix = "swagger";
 
-			foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+			foreach (ApiVersionDescription description in provider.ApiVersionDescriptions.Reverse())
 			{
 				options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToLowerInvariant());
 			}
@@ -79,7 +124,16 @@ public class Startup
 		
 		app.UseEndpoints(endpoints =>
 		{
-			endpoints.MapDefaultControllerRoute();
+			/*
+			 * Remove once a website is built.
+			 */
+			endpoints.MapGet("/", context =>
+			{
+				context.Response.Redirect("/swagger/index.html");
+				return Task.CompletedTask;
+			});
+			
+			endpoints.MapControllers();
 		});
 	}
 }
