@@ -79,7 +79,7 @@ public class Startup
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
 
-		services.AddSingleton<PythonRunner>();
+		services.AddSingleton<PythonReplayParser>();
 	}
 
 	

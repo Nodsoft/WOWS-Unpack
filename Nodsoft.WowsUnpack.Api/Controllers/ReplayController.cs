@@ -7,24 +7,20 @@ namespace Nodsoft.WowsUnpack.Api.Controllers;
 [ApiVersion("1.0")]
 public class ReplayController : ControllerBase
 {
-	private readonly PythonRunner _runner;
+	public const long MaximumReplaySize = 8388608;
+	
+	private readonly PythonReplayParser _replayParser;
 
-	public ReplayController(PythonRunner runner)
+	public ReplayController(PythonReplayParser replayParser)
 	{
-		_runner = runner;
+		_replayParser = replayParser;
 	}
 	
 	
-	[HttpPost]
+	[HttpPost, RequestSizeLimit(MaximumReplaySize)]
 	public async Task<string> Index(IFormFile file, CancellationToken ct)
 	{
-		await using Stream stream = file.OpenReadStream();	
-		
-		//const string cmd = @".\replay_parser.py --replay .\0.11.0.wowsreplay";
-		//const string cmd = @"python .\replay_parser.py --replay .\0.11.0.wowsreplay";
-		//const string cmd = @"echo $env:PATH";
-		//const string cmd = @"pwd";
-
-		return await _runner.RunParserAsync(stream, ct);
+		await using Stream stream = file.OpenReadStream();
+		return await _replayParser.RunParserAsync(stream, ct);
 	}
 }
