@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Version>1.0-pre1</Version>
+        <Title>WOWS Unpack - Common Data Structures</Title>
+        <Authors>Sakura Akeno Isayeki, floribe2000</Authors>
+        <Description>A library that can be used to deserialize the result of the replay unpack api into typesafe C# data structures.</Description>
+        <PackageProjectUrl>wows-unpack.nodsoft.net</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/Nodsoft/WOWS-Unpack</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>wows,replay</PackageTags>
+        <Company>Nodsoft Systems</Company>
+        <Product>WOWS Unpack</Product>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
+    </PropertyGroup>
+
+</Project>

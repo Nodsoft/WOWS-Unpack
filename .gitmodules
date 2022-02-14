@@ -1,0 +1,3 @@
+[submodule "replays_unpack"]
+	path = replays_unpack
+	url = https://github.com/Nodsoft/replays_unpack
