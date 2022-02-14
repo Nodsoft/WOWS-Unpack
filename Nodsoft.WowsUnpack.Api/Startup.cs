@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nodsoft.WowsUnpack.Api.Infrastructure.Middlewares;
 using Nodsoft.WowsUnpack.Api.Infrastructure.Swagger;
+using Nodsoft.WowsUnpack.Api.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Nodsoft.WowsUnpack.Api;
@@ -77,6 +78,8 @@ public class Startup
 		
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
+
+		services.AddSingleton<PythonRunner>();
 	}
 
 	
