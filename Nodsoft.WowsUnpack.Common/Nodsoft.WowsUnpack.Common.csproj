@@ -3,6 +3,7 @@
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>1.0-pre1</Version>
         <Title>WOWS Unpack - Common Data Structures</Title>
         <Authors>Sakura Akeno Isayeki, floribe2000</Authors>
         <Description>A library that can be used to deserialize the result of the replay unpack api into typesafe C# data structures.</Description>
