@@ -15,14 +15,16 @@ public class ReplayController : ControllerBase
 	}
 	
 	
-	[HttpGet]
-	public async Task<string> Index()
+	[HttpPost]
+	public async Task<string> Index(IFormFile file, CancellationToken ct)
 	{
-		const string cmd = @".\replay_parser.py --replay .\0.11.0.wowsreplay";
+		await using Stream stream = file.OpenReadStream();	
+		
+		//const string cmd = @".\replay_parser.py --replay .\0.11.0.wowsreplay";
 		//const string cmd = @"python .\replay_parser.py --replay .\0.11.0.wowsreplay";
 		//const string cmd = @"echo $env:PATH";
 		//const string cmd = @"pwd";
 
-		return await _runner.RunScriptAsync(cmd);
+		return await _runner.RunParserAsync(stream, ct);
 	}
 }
