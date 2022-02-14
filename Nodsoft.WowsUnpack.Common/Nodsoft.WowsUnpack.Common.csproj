@@ -8,7 +8,7 @@
         <Authors>Sakura Akeno Isayeki, floribe2000</Authors>
         <Description>A library that can be used to deserialize the result of the replay unpack api into typesafe C# data structures.</Description>
         <PackageProjectUrl>wows-unpack.nodsoft.net</PackageProjectUrl>
-        <PackageLicenseUrl>MIT</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/Nodsoft/WOWS-Unpack</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>wows,replay</PackageTags>
