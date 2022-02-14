@@ -55,7 +55,7 @@ public sealed record OpenReplayDataDto
 
     public long BattleDuration { get; init; }
 
-    public object MapBorder { get; init; } = 0;
+    public object? MapBorder { get; init; }
 }
 
 public sealed record OpenVehicleDto
