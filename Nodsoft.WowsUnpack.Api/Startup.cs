@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.IO.Compression;
+using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nodsoft.WowsUnpack.Api.Infrastructure.Middlewares;
@@ -47,6 +49,7 @@ public class Startup
 			string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 			options.IncludeXmlComments(xmlPath);
 
+			/*
 			// Bearer token authentication
 			options.AddSecurityDefinition("jwt_auth", new()
 			{
@@ -58,7 +61,7 @@ public class Startup
 				Type = SecuritySchemeType.Http,
 			});
 
-			/*
+			
 			// Make sure swagger UI requires a Bearer token specified
 			OpenApiSecurityScheme securityScheme = new()
 			{
@@ -75,6 +78,20 @@ public class Startup
 			});
 			*/
 		});
+		
+		services.AddResponseCompression(options =>
+		{
+			options.Providers.Add<BrotliCompressionProvider>();
+			options.Providers.Add<GzipCompressionProvider>();
+			
+			options.EnableForHttps = true;
+		});
+		
+		services.Configure<BrotliCompressionProviderOptions>(options => 
+		{
+			options.Level = CompressionLevel.Optimal;
+		});
+
 		
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen();
@@ -124,6 +141,8 @@ public class Startup
 		app.UseForwardedHeaders(forwardedHeadersOptions);
 		
 		app.UseMiddleware<RequestLoggingMiddleware>();
+
+		app.UseResponseCompression();
 		
 		app.UseEndpoints(endpoints =>
 		{
