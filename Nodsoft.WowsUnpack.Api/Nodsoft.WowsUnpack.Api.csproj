@@ -18,4 +18,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Nodsoft.WowsUnpack.Common\Nodsoft.WowsUnpack.Common.csproj" />
+    </ItemGroup>
+
 </Project>

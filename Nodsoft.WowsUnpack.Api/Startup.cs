@@ -43,7 +43,8 @@ public class Startup
 		services.AddSwaggerGen(options =>
 		{
 			options.OperationFilter<SwaggerDefaultValues>();
-
+			options.SupportNonNullableReferenceTypes();
+			
 			// Set the comments path for the Swagger JSON and UI.
 			string xmlFile = $"{typeof(Startup).Assembly.GetName().Name}.xml";
 			string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
