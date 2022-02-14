@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using Nodsoft.WowsUnpack.Api.Services;
 
 namespace Nodsoft.WowsUnpack.Api.Controllers;
@@ -18,9 +21,16 @@ public class ReplayController : ControllerBase
 	
 	
 	[HttpPost, RequestSizeLimit(MaximumReplaySize)]
-	public async Task<string> Index(IFormFile file, CancellationToken ct)
+	public async Task<IActionResult> Index(IFormFile file, CancellationToken ct)
 	{
 		await using Stream stream = file.OpenReadStream();
-		return await _replayParser.RunParserAsync(stream, ct);
+		
+		JsonNode? json = JsonNode.Parse(
+			await _replayParser.RunParserAsync(stream, ct));
+
+		return new JsonResult(json, new JsonSerializerOptions
+		{
+			WriteIndented = !Request.Headers.Accept.Contains("application/json") && Request.Headers.Accept.Contains("text/json")
+		});
 	}
 }
