@@ -1,4 +1,7 @@
-﻿namespace Nodsoft.WowsUnpack.Common.Data.DTOs;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Nodsoft.WowsUnpack.Common.Data.DTOs;
 
 public sealed record HiddenVehicleDto(
     ClientPropertiesDto Client,

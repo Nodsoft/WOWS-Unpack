@@ -10,9 +10,4 @@ public static class JsonHelper
         PropertyNameCaseInsensitive = true,
         Converters = { new IntToBoolConverter() },
     };
-
-    public static readonly JsonSerializerOptions SerializationOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
 }
