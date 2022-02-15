@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodsoft.WowsUnpack.Common",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodsoft.WowsUnpack.Common.Tests", "Nodsoft.WowsUnpack.Common.Tests\Nodsoft.WowsUnpack.Common.Tests.csproj", "{1E35732A-8A57-488B-B510-5BB971FD0038}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodsoft.WowsUnpack.Client", "Nodsoft.WowsUnpack.Client\Nodsoft.WowsUnpack.Client.csproj", "{A1EBEC9B-4365-4050-9817-E73B0F07DBCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{1E35732A-8A57-488B-B510-5BB971FD0038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E35732A-8A57-488B-B510-5BB971FD0038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E35732A-8A57-488B-B510-5BB971FD0038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1EBEC9B-4365-4050-9817-E73B0F07DBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EBEC9B-4365-4050-9817-E73B0F07DBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EBEC9B-4365-4050-9817-E73B0F07DBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EBEC9B-4365-4050-9817-E73B0F07DBCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

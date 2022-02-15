@@ -8,12 +8,12 @@
     </PropertyGroup>
     
     <Import Project="../Shared.props" />
-    
+
     <PropertyGroup>
         <VersionSuffix>pre1</VersionSuffix>
-        <Title>WOWS Unpack - Common Data Structures</Title>
+        <Title>WOWS Unpack - Client Library</Title>
         <Authors>Sakura Akeno Isayeki, floribe2000</Authors>
-        <Description>A library that can be used to deserialize the result of the replay unpack api into typesafe C# data structures.</Description>
+        <Description>A client library that can be used to access the WOWS Unpack API.</Description>
         <PackageProjectUrl>wows-unpack.nodsoft.net</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/Nodsoft/WOWS-Unpack</RepositoryUrl>
@@ -22,5 +22,9 @@
         <Company>Nodsoft Systems</Company>
         <Product>WOWS Unpack</Product>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Nodsoft.WowsUnpack.Common\Nodsoft.WowsUnpack.Common.csproj" />
+    </ItemGroup>
 
 </Project>
