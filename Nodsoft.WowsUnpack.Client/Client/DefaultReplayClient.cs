@@ -5,7 +5,7 @@ using System.Runtime.Versioning;
 namespace Nodsoft.WowsUnpack.Client.Client;
 
 /// <summary>
-/// A <see cref="IReplayClientBase"/> implementation for all platforms except browser that automatically configures the http client to use gzip or brotli compression.
+/// A <see cref="IReplayClient"/> implementation for all platforms except browser that automatically configures the http client to use gzip or brotli compression.
 /// </summary>
 [UnsupportedOSPlatform("browser")]
 public class DefaultReplayClient : ReplayClientBase

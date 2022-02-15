@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="DefaultReplayClientTests\Yamato-0.11.0.wowsreplay">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Nodsoft.WowsUnpack.Client\Nodsoft.WowsUnpack.Client.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="FluentAssertions, Version=6.5.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
+        <HintPath>..\..\..\..\NuGet\cache\fluentassertions\6.5.1\lib\netcoreapp3.0\FluentAssertions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

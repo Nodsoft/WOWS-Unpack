@@ -24,7 +24,7 @@
     </PropertyGroup>
 
     <Target Name="PostBuildVersionDump" AfterTargets="Build">
-        <WriteLinesToFile File="buildInfo.txt" Lines="%3CVersion>$(Version)%3cVersion/>" Overwrite="true" />
+        <WriteLinesToFile File="buildInfo.txt" Lines="&lt;Version&gt;$(Version)&lt;Version/&gt;" Overwrite="true" />
     </Target>
 
 </Project>
