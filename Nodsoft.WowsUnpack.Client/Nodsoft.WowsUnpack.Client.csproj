@@ -23,6 +23,10 @@
         <Product>WOWS Unpack</Product>
     </PropertyGroup>
 
+    <Target Name="PostBuildVersionDump" AfterTargets="Build">
+        <WriteLinesToFile File="buildInfo.txt" Lines="%3CVersion>$(Version)%3cVersion/>" Overwrite="true" />
+    </Target>
+
     <ItemGroup>
       <ProjectReference Include="..\Nodsoft.WowsUnpack.Common\Nodsoft.WowsUnpack.Common.csproj" />
     </ItemGroup>

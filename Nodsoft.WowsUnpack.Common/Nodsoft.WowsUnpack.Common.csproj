@@ -23,4 +23,8 @@
         <Product>WOWS Unpack</Product>
     </PropertyGroup>
 
+    <Target Name="PostBuildVersionDump" AfterTargets="Build">
+        <WriteLinesToFile File="buildInfo.txt" Lines="%3CVersion>$(Version)%3cVersion/>" Overwrite="true" />
+    </Target>
+
 </Project>
