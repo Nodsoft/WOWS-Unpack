@@ -1,4 +1,5 @@
 <img align="right" src="Nodsoft.WowsUnpack.Common/logo.png" alt="logo" width="200"/>
+
 # WOWS Unpack
 
 A project that provides a web API and C# data structures to process World of Warships replay files.
