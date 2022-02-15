@@ -10,7 +10,7 @@ namespace Nodsoft.WowsUnpack.Client.Client;
 /// <summary>
 /// A simple client implementation to upload a replay file and receive the extracted data.
 /// </summary>
-public class ReplayClientBase : IReplayClientBase
+public class ReplayClientBase : IReplayClient
 {
     private const string UnpackPath = "/api/v1/Replay";
     private readonly HttpClient httpClient;
@@ -28,10 +28,10 @@ public class ReplayClientBase : IReplayClientBase
         this.unpackHost = unpackHost;
     }
 
-    public async Task<JsonReplayDto?> PostReplayDtoAsync(Stream fileContent)
+    public async Task<JsonReplayDto?> PostReplayDtoAsync(Stream fileContent, string filename)
     {
         MultipartFormDataContent form = new();
-        form.Add(new StreamContent(fileContent), "file");
+        form.Add(new StreamContent(fileContent), "file", filename);
 
         var response = await httpClient.PostAsync(unpackHost + UnpackPath, form);
         response.EnsureSuccessStatusCode();

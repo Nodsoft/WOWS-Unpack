@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
+          
+      - name: Build
+        run: dotnet build Nodsoft.WowsUnpack.Common -c Release
 
       # Publish
       - name: Publish to NuGet
@@ -32,7 +35,7 @@ jobs:
           # PACKAGE_NAME: Core
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          VERSION_FILE_PATH: Nodsoft.WowsUnpack.Common/buildInfo.txt
 
           # Regex pattern to extract version info in a capturing group
           # VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
@@ -68,7 +71,7 @@ jobs:
           # PACKAGE_NAME: Core
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          VERSION_FILE_PATH: Nodsoft.WowsUnpack.Common/buildInfo.txt
 
           # Regex pattern to extract version info in a capturing group
           # VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
@@ -104,19 +107,22 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: Build
+        run: dotnet build Nodsoft.WowsUnpack.Client -c Release
+
       # Publish
       - name: Publish to NuGet
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
           # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Nodsoft.WowsUnpack.Common/Nodsoft.WowsUnpack.Client.csproj
+          PROJECT_FILE_PATH: Nodsoft.WowsUnpack.Client/Nodsoft.WowsUnpack.Client.csproj
           
           # NuGet package id, used for version detection & defaults to project name
           # PACKAGE_NAME: Core
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          VERSION_FILE_PATH: Nodsoft.WowsUnpack.Client/buildInfo.txt
 
           # Regex pattern to extract version info in a capturing group
           # VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
@@ -146,13 +152,13 @@ jobs:
         uses: Rebel028/publish-nuget@2.6.1
         with:
           # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Nodsoft.WowsUnpack.Common/Nodsoft.WowsUnpack.Client.csproj
+          PROJECT_FILE_PATH: Nodsoft.WowsUnpack.Client/Nodsoft.WowsUnpack.Client.csproj
           
           # NuGet package id, used for version detection & defaults to project name
           # PACKAGE_NAME: Core
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          VERSION_FILE_PATH: Nodsoft.WowsUnpack.Client/buildInfo.txt
 
           # Regex pattern to extract version info in a capturing group
           # VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
