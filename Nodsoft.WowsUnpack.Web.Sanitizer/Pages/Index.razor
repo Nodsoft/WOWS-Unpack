@@ -1,7 +1,113 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<h1 class="my-5">WOWS Replay Scanner</h1>
+<h2 class="my-3">Greetings!</h2>
 
-<h1>Hello, world!</h1>
+<p class="lead">
+	This app aims at providing a quick and easy way to scan World of Warships replays, for vulnerabilities.
+</p>
 
-Welcome to your new app.
+<div class="row my-5 g-5">
+	<div class="col-4">
+		<h3 class="mb-5"><i class="bi bi-question-circle me-4"></i>Why do we need this ?</h3>
+		
+		<p class="lead">
+			On the 25th May 2022, Wargaming announced our exploit findings to the public, 
+			that we published in parallel to the Cybersecurity community under <a href="https://www.cve.org/CVERecord?id=CVE-2022-31265">CVE-2022-31265</a>.
+			<br />
+			The current replay system is vulnerable to <a href="https://en.wikipedia.org/wiki/Buffer_overflow">Buffer Overflow</a> attacks,
+			leaving the replay system open to <a href="https://en.wikipedia.org/wiki/Arbitrary_code_execution">Remote Code Execution</a> exploits. 
+		</p>
+		
+		<p>
+			Any infected replay will be able to execute arbitrary code on a game client, 
+			allowing an attacker to access data on your machine, as well as stealing accounts.
+		</p>
+		
+		<div id="demo-video" class="mb-3">
+			<p class="lead my-1">A demonstration is available here:</p>
+			
+			<div class="ratio ratio-16x9">
+				<iframe
+					src="https://www.youtube.com/embed/LjrhoUp_Edc"
+					title="YouTube video"
+					allowfullscreen>
+				</iframe>
+			</div>
+		</div>
+		
+		<p class="my-3">
+			This app aims to mitigate this vulnerability by providing a quick and easy way to scan replays.
+			It has been developed by the same researchers who discovered the exploit, and is 
+			<a href="https://github.com/Nodsoft/WOWS-Unpack/tree/main/Nodsoft.WowsUnpack.Common">fully open-source</a>.
+		</p>
+	</div>
+	
+	<div class="col-4">
+		<h3 class="mb-5"><i class="bi bi-incognito me-4"></i>What happens with my replays here?</h3>
+		<p class="lead">Short answer : No data is stored on our servers. Period.</p>
+    	
+		<p>
+			This app is based on a technology called 
+			<a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor</a> <a href="https://webassembly.org/">WebAssembly (WASM)</a>.
+			This means the entire ASP.NET Core app is loaded in your browser. Yep, that's it. All the magic is done from the comfort of your browser. 
+		</p>
+    	
+		<p>
+			This means that we only transfer the app code to your browser, and that's it. No data is stored on our servers. Ever.
+			This also allows you to scan any amounts of replays, without having to upload them to our servers. <br />
+			Plus, this also means privacy! We never know what kinds of replays you're scanning, 
+			but we're sure our app will make the right call in sniffing out RCE injections.
+		</p>
+	</div>
+	
+	<div class="col-4">
+		<h3 class="mb-5"><i class="bi bi-chat-heart me-4"></i>My replay is safe. What now?</h3>
+		<p class="lead">
+			You're lucky. You won't get hit by RCEs with our app! <br />
+			But what about the rest of the WOWS community?
+		</p>
+        
+		<p>
+			The best you can do is to spread the word about this app, and to keep an eye on the 
+			<a href="https://blog.worldofwarships.com/">World of Warships Development Blog</a>. 
+			<br />
+			We're told that this could take a while to fix, as it's a vulnerability that's deeply rooted into the game engine.
+			Which is why, pending a fix, the only way to mitigate this issue is to use our app to scan each incoming replay.
+		</p>
+        
+		<p>
+			If you're a CC, or any kind of influencer, you can also help us by using your influence to spread the word about this app. <br />
+			If you're a cybersecurity researcher or cyber-combattant, you can also help us by helping us find a way to further research and mitigate this issue. <br />
+			Finally, if you're a developer, you can also help us by contributing to our open source projects.
+			Extra points for you if you're a C#/.NET developer, or a Python developer.
+		</p>
+		
+		<p class="lead">
+			We're based on the <a href="https://discord.gg/PrW9dtzK9K">WOWS Karma Discord server</a>, 
+			so feel free to join us there, and ask us any questions you might have.
+		</p>
+	</div>
+</div>
+
+<div class="my-5">
+	<h3>Testing samples</h3>
+	
+	<p>
+		If you feel like getting first hand experience, we've crafted a sample replay to test our app.
+		Luckily, it doesn't contain any malicious code, and it's safe to use. 
+		If you're unlucky and actually run it, it will merely display a shell with a small message. <br />
+		This is the same replay as demonstrated in the video above.
+	</p>
+
+	<dl class="row my-3">
+		<dt class="col-lg-3">Replay file</dt>
+		<dd class="col-lg-9"><a href="/assets/payload.wowsreplay">Download (payload.wowsreplay)</a></dd>
+		
+		<dt class="col-lg-3">File Signature (GPG)</dt>
+		<dd class="col-lg-9"><a href="/assets/payload.wowsreplay.sig">Download (payload.wowsreplay.sig)</a></dd>
+		
+		<dt class="col-lg-3">Reference Signature (GPG)</dt>
+		<dd class="col-lg-9"><a href="https://links.nodsoft.net/sakura-isayeki-gpg">Link (Sakura Akeno Isayeki &lt;sakura.isayeki@nodsoft.net&gt;)</a></dd>
+	</dl>
+</div>
