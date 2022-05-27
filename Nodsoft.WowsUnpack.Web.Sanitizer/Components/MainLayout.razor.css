@@ -50,7 +50,7 @@ main {
     }
 
     .sidebar {
-        width: 20rem;
+        width: 24rem;
         height: 100vh;
         position: sticky;
         top: 0;

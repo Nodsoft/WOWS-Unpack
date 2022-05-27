@@ -1,6 +1,9 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="">WOWS Unpack Replay Sanitizer</a>
+		<div class="d-flex flex-row align-items-center">
+			<img src="/assets/icons/android-chrome-192x192.png" class="img-fluid me-3" alt="logo" style="max-height: 3rem;">
+            <span class="navbar-brand">WOWS Replay Scanner</span>
+		</div>
 		<button class="navbar-toggler" @onclick="ToggleNavMenu" title="Navigation menu">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -8,16 +11,16 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-	<nav class="flex-column">
+	<nav class="flex-column my-3 my-lg-5">
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-				<i aria-hidden="true" class="bi bi-house-fill"></i>Home
+				<i aria-hidden="true" class="bi bi-house-fill me-3"></i>Home
 			</NavLink>
 		</div>
 		
 		<div class="nav-item px-3">
         	<NavLink class="nav-link" href="/scan" Match="NavLinkMatch.All">
-        		<i aria-hidden="true" class="bi bi-search"></i>Scan Replay Files
+        		<i aria-hidden="true" class="bi bi-search me-3"></i>Scan Replay Files
         	</NavLink>
         </div>
 	</nav>
