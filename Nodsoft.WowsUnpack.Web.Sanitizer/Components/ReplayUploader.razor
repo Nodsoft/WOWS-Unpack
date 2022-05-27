@@ -6,34 +6,34 @@
 	Upload form for .wowsreplay file 
 *@
 
-<div class="row justify-content-around">
-	<div class="col-9">
-		<EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync">
-			<DataAnnotationsValidator />
-			<ValidationSummary />
-        	
+<EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync">
+	<div class="row justify-content-around">
+		<div class="col-9">
 			<div class="d-flex flex-column">
 				<h5 class="my-3">Select a Replay File</h5>
 				<InputFile OnChange=LoadFiles class="form-control" accept=".wowsreplay" placeholer="Choose Replay File..." />
 			</div>
-        
+	        
 			<div class="d-flex flex-row my-3 gap-3">
 				<button type="submit" class="btn btn-primary px-5">Scan replay</button>
 				<button type="reset" class="btn btn-secondary px-3">Clear file</button>
 			</div>
-		</EditForm>
+		</div>
+		
+		<div class="col-3">
+			<DataAnnotationsValidator />
+            <ValidationSummary />
+			
+			@if (Uploading)
+			{
+				<div class="d-flex flex-column justify-content-center align-items-center">
+					<div class="lds-dual-ring m-3"></div>
+					<h3>Loading...</h3>
+				</div>
+			}
+		</div>
 	</div>
-	
-	<div class="col-3">
-		@if (Uploading)
-		{
-			<div class="d-flex flex-column justify-content-center align-items-center">
-				<div class="lds-dual-ring m-3"></div>
-				<h3>Loading...</h3>
-			</div>
-		}
-	</div>
-</div>
+</EditForm>
 
 @code {
 	[Parameter] public EventCallback<ReplayUploadResult> OnReplayUpload { get; set; }
