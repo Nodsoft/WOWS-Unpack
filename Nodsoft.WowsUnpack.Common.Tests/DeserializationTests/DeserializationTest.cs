@@ -1,16 +1,14 @@
 ﻿using System.IO;
 using System.Text.Json;
-using FluentAssertions;
 using Nodsoft.WowsUnpack.Common.Data.DTOs;
 using Nodsoft.WowsUnpack.Common.Data.Serialization;
-using NUnit.Framework;
+using Xunit;
 
 namespace Nodsoft.WowsUnpack.Common.Tests.DeserializationTests;
 
-[TestFixture]
 public class DeserializationTest
 {
-    [Test]
+    [Fact]
     public void DeserializeSampleData_0110()
     {
         const string testfile = "DeserializationTests/sampleData_0.11.0.json";
@@ -18,10 +16,11 @@ public class DeserializationTest
         string fileContent = File.ReadAllText(testfile);
         JsonReplayDto? replayDto = JsonSerializer.Deserialize<JsonReplayDto>(fileContent, JsonHelper.DeserializationOptions);
 
-        replayDto.Should().NotBeNull();
-        replayDto!.Hidden.Vehicles.Should()
-            .AllSatisfy(entry => entry.Value.Client.CrewModifiersCompactParams.LearnedSkills.Should().HaveCount(6));
-        replayDto.Hidden.PlayerId.Should().BeGreaterThan(0);
-        replayDto.Hidden.BattleResult.WinnerTeamId.Should().BeGreaterThan(-1);
+        Assert.NotNull(replayDto);
+        
+        Assert.All(replayDto!.Hidden.Vehicles, entry => Assert.Equal(6, entry.Value.Client.CrewModifiersCompactParams.LearnedSkills.Length));
+
+        Assert.True(replayDto.Hidden.PlayerId > 0);
+        Assert.True(replayDto.Hidden.BattleResult.WinnerTeamId > -1);
     }
 }
