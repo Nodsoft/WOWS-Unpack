@@ -1,0 +1,118 @@
+﻿@using System.Security
+@using System.Text
+
+@code {
+	public static RenderFragment Clean { get; } = __builder =>
+	{
+		<div class="card bg-body border-success p-4">
+			<div class="row text-success">
+				<div class="col-auto">
+					<h1><i class="bi bi-shield-check"></i></h1>
+				</div>
+				
+                <div class="col">
+	                <h1 class="mb-3">
+		                All clear !
+	                </h1>
+	                
+                    <p class="mb-0 lead">
+	                    We have checked your replay and it seems to be clean. <br />
+	                    No RCE injection was detected, so you should be able to safely play it.
+                    </p>
+                </div>
+            </div>
+		</div>
+	};
+
+	public static RenderFragment<Exception> ParsingException { get; } = e => __builder =>
+	{
+		<div class="card bg-body border-warning p-4">
+			<div class="row text-warning mb-5">
+				<div class="col-auto">
+					<h1><i class="bi bi-exclamation-triangle"></i></h1>
+				</div>
+				
+				<div class="col">
+					<h1 class="mb-3">Uh oh...</h1>
+	                
+					<p class="lead">It seems there was an issue parsing your replay.</p>
+					
+					<p class="mb-0">
+						This might not be security related, but rather an issue with the replay itself, or our parser. <br />
+						Check the exception info below for more details.
+					</p>
+				</div>
+			</div>
+			
+			<div>
+				<h3 class="mb-3 text-warning"><i class="bi bi-info-circle me-3"></i>Exception Details</h3>
+				@ExceptionRenderFragment(e)
+			</div>
+		</div>
+	};
+	
+	public static RenderFragment<Exception> InjectionException { get; } = e => __builder =>
+	{
+		<div class="card bg-body border-danger p-4">
+			<div class="row text-danger mb-5">
+				<div class="col-auto">
+					<h1><i class="bi bi-shield-x"></i></h1>
+				</div>
+				
+				<div class="col">
+					<h1 class="mb-3">Oh no.</h1>
+	                
+					<p class="lead">
+						You've just avoided the worst. <br />
+						We have detected an RCE injection in your replay.
+					</p>
+					
+					<p class="mb-0">
+						<strong>You SHOULD NOT open this replay, at any costs.</strong> There is something very nasty inside. <br />
+						Unless you know what you're doing, delete the replay and report the replay's sender to your platform's moderators. <br />
+						Check the exception info below for more details.
+					</p>
+				</div>
+			</div>
+			
+			<div>
+				<h3 class="mb-3 text-danger"><i class="bi bi-info-circle me-3"></i>Exception Details</h3>
+				@ExceptionRenderFragment(e)
+			</div>
+		</div>
+	};
+
+	private static RenderFragment<Exception> ExceptionRenderFragment { get; } = e => __builder =>
+	{
+		<dl class="row">
+			<dt class="col-lg-2">Type</dt>
+			<dd class="col-lg-10">@e.GetType().FullName</dd>
+			
+			<dt class="col-lg-2">Message</dt>
+			<dd class="col-lg-10" style="white-space: pre-wrap">@e.Message</dd>
+
+			<dt class="col-lg-2">Source</dt>
+			<dd class="col-lg-10">@(e.Source ?? "Unknown")</dd>
+			
+			@if (e is SecurityException se && se.Data["exploit"] is not null) // A CVE code was provided
+			{
+				<dt class="col-lg-2">CVE / Exploit</dt>
+				<dd class="col-lg-10"><a href="https://www.cve.org/CVERecord?id=@se.Data["exploit"]">@se.Data["exploit"]</a></dd>
+
+				@*
+				<dt class="col-lg-2">Blob Raw value</dt>
+				<dd class="col-lg-10 font-monospace">@Encoding.UTF8.GetString(se.Data["blob"] as byte[] ?? Array.Empty<byte>())</dd>
+				*@
+			}
+
+			<dt class="col-lg-2">Stack Trace</dt>
+			<dd class="col-sm-10 font-monospace" style="white-space: pre-wrap">@e.StackTrace</dd>
+
+			@if (e.InnerException is not null)
+			{
+				<dt class="col-lg-2">Inner Exception</dt>
+				<dd class="col-lg-10">@ExceptionRenderFragment(e.InnerException)</dd>
+			}
+		</dl>
+	};	
+}

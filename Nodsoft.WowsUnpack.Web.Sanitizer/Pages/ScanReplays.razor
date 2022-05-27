@@ -1,0 +1,30 @@
+﻿@page "/scan"
+
+@using System.Security
+
+<h1 class="mb-5"><i class="bi bi-search me-5"></i> Scan Replays</h1>
+
+<ReplayUploader @ref="_replayUploader" OnReplayUpload="result => _replayUploadResult = result" />
+
+<hr class="my-5" />
+
+@if (_replayUploadResult is not null)
+{
+	if (_replayUploadResult.Replay is not null) // Clean replay
+	{
+		@ParsingResults.Clean
+	}
+	else if (_replayUploadResult.ParsingException is SecurityException) // CVE-2022-31265
+	{
+		@ParsingResults.InjectionException(_replayUploadResult.ParsingException)
+	}
+	else // Parsing error
+	{
+		@ParsingResults.ParsingException(_replayUploadResult.ParsingException!)
+	}
+}
+
+@code {
+	ReplayUploader _replayUploader = new();
+	ReplayUploadResult? _replayUploadResult;
+}
