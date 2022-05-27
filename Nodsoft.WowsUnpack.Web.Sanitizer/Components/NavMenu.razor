@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="">Nodsoft.WowsUnpack.Web.Sanitizer</a>
+		<a class="navbar-brand" href="">WOWS Unpack Replay Sanitizer</a>
 		<button class="navbar-toggler" @onclick="ToggleNavMenu" title="Navigation menu">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -10,20 +10,16 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 	<nav class="flex-column">
 		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-				<span aria-hidden="true" class="oi oi-home"></span> Home
+			<NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+				<i aria-hidden="true" class="bi bi-house-fill"></i>Home
 			</NavLink>
 		</div>
+		
 		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="counter">
-				<span aria-hidden="true" class="oi oi-plus"></span> Counter
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="fetchdata">
-				<span aria-hidden="true" class="oi oi-list-rich"></span> Fetch data
-			</NavLink>
-		</div>
+        	<NavLink class="nav-link" href="/scan" Match="NavLinkMatch.All">
+        		<i aria-hidden="true" class="bi bi-search"></i>Scan Replay Files
+        	</NavLink>
+        </div>
 	</nav>
 </div>
 
@@ -36,5 +32,4 @@
 	{
 		collapseNavMenu = !collapseNavMenu;
 	}
-
 }
