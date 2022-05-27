@@ -1,0 +1,81 @@
+﻿@using Nodsoft.WowsReplaysUnpack.Data
+@inject ReplayUnpacker Unpacker
+@inject ILogger<ReplayUploader> Logger
+
+@* 
+	Upload form for .wowsreplay file 
+*@
+
+<EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync">
+	<div class="row justify-content-around">
+		<div class="col-9">
+			<div class="d-flex flex-column">
+				<h5 class="my-3">Select a Replay File</h5>
+				<InputFile OnChange=LoadFiles class="form-control" accept=".wowsreplay" placeholer="Choose Replay File..." />
+			</div>
+	        
+			<div class="d-flex flex-row my-3 gap-3">
+				<button type="submit" class="btn btn-primary px-5">Scan replay</button>
+				<button type="reset" class="btn btn-secondary px-3">Clear file</button>
+			</div>
+		</div>
+		
+		<div class="col-3">
+			<DataAnnotationsValidator />
+            <ValidationSummary />
+			
+			@if (Uploading)
+			{
+				<div class="d-flex flex-column justify-content-center align-items-center">
+					<div class="lds-dual-ring m-3"></div>
+					<h3>Loading...</h3>
+				</div>
+			}
+		</div>
+	</div>
+</EditForm>
+
+@code {
+	[Parameter] public EventCallback<ReplayUploadResult> OnReplayUpload { get; set; }
+	
+	public bool Uploading { get; protected set; }
+	
+	protected ReplayUploadForm Model = new();
+
+	private string? _currentFile;
+	
+	public async Task OnValidSubmitAsync()
+	{
+		Uploading = true;
+		
+		try
+		{
+			Logger.LogInformation("Uploading replay {FileName}", _currentFile);
+			
+			await using Stream openReadStream = Model.File!.OpenReadStream(5242880);
+			await using MemoryStream ms = new();
+			await openReadStream.CopyToAsync(ms);
+			ms.Position = 0;
+			
+			Logger.LogInformation("Parsing replay {FileName}. Size of stream: {StreamLength}", _currentFile, ms.Length);
+
+			ReplayUploadResult result = new(Unpacker.UnpackReplay(ms), null);
+			Logger.LogInformation("Successfully parsed replay {FileName}. Replay details : {replay}", _currentFile, result.Replay);
+			
+			await OnReplayUpload.InvokeAsync(result);
+		}
+		catch (Exception e)
+		{
+			Logger.LogInformation("Failed to parse replay {FileName}. Exception: {Exception}", _currentFile, e);
+			await OnReplayUpload.InvokeAsync(new(null, e));
+		}
+		
+		Uploading = false;
+	}
+	
+	private void LoadFiles(InputFileChangeEventArgs e)
+	{
+		Model.File = e.File;
+		_currentFile = e.File.Name;
+	}
+}

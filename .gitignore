@@ -351,3 +351,6 @@ MigrationBackup/
 
 .idea/
 buildInfo.txt
+**/wwwroot/lib/
+
+*/wwwroot/css/*.css
